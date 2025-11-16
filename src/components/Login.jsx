@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { metaGet, metaSet } from './storage'
-import { useSecurityGuards } from './security'
 import Spline from '@splinetool/react-spline'
 
 const ADMIN_USERNAME = 'dakshPRTF'
@@ -15,9 +14,6 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [attemptsLeft, setAttemptsLeft] = useState(MAX_ATTEMPTS)
   const [lockedUntil, setLockedUntil] = useState(null)
-  const [warning, setWarning] = useState('')
-
-  useSecurityGuards({ onDevtoolsDetected: () => setWarning('Developer tools are disabled for security.') })
 
   // Load attempts state from IndexedDB
   useEffect(() => {
@@ -84,10 +80,6 @@ export default function Login() {
             <p className="text-white/70">Secure access to manage and view trades</p>
           </div>
 
-          {warning && (
-            <div className="text-amber-400 text-sm text-center">{warning}</div>
-          )}
-
           {isLocked ? (
             <div className="text-center text-red-400">
               Login locked. Try again in {Math.ceil(lockTimeLeft / 60)} minutes.
@@ -112,12 +104,6 @@ export default function Login() {
 
           <div className="flex items-center gap-3">
             <button onClick={continueViewer} className="w-full py-2 rounded bg-white/10 hover:bg-white/20 transition border border-white/10">Continue as Viewer</button>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 text-center text-xs text-white/60">
-            <div className="backdrop-blur bg-white/5 rounded p-2">F12 Blocked</div>
-            <div className="backdrop-blur bg-white/5 rounded p-2">Right-click Disabled</div>
-            <div className="backdrop-blur bg-white/5 rounded p-2">Ctrl+Shift+I Blocked</div>
           </div>
         </div>
       </div>

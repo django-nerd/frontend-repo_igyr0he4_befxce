@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addTrade, computeStats, deleteTrade, exportTradesToCSV, getAllPairs, listTrades, metaGet, metaSet, updateTrade } from './storage'
-import { useSecurityGuards } from './security'
 import { Download, LogOut, Plus, Search, SlidersHorizontal, Trash2, Edit3 } from 'lucide-react'
 
 function number(v, d = 2) {
@@ -174,8 +173,6 @@ export default function Dashboard() {
   const [pairs, setPairs] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [editItem, setEditItem] = useState(null)
-
-  useSecurityGuards()
 
   useEffect(() => {
     (async () => {
